@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Similarweb App Data Viewer</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Similarweb: Unified App Metrics</title>
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
   <script src="https://code.highcharts.com/highcharts.js"></script>
   <script src="https://code.highcharts.com/modules/exporting.js"></script>
   <script src="https://code.highcharts.com/modules/export-data.js"></script>
@@ -21,17 +24,38 @@
   </style>
 </head>
 <body class="container py-4">
-  <h1 class="mb-4">Similarweb App Data Viewer</h1>
+  <h1 class="mb-4">Similarweb: Unified App Metrics</h1>
+  <p>
+    This demo page uses the
+    <a
+      href="https://developers.similarweb.com/reference/request-report"
+      target="_blank"
+      >Similarweb REST API</a
+    >
+    to retrieve data on Downloads and Active Users across Google Play and the Apple App Store,
+    based on the selected countries and granularities. It then unifies this data to present
+    a consolidated view of the app’s overall performance across platforms.
+  </p>
+  <p class="text-muted">
+    Note: Worldwide data for iOS Active Users is currently unavailable and
+    will be excluded from the analysis.
+  </p>
+  <br /><br />
 
   <form id="appForm" class="row g-3">
     <div class="col-md-6">
-      <label class="form-label">API Key</label>
-      <input type="text" id="apiKey" class="form-control" required>
+      <br /><br />
+      <label class="form-label">Similarweb API Key</label>
+      <input type="text" id="apiKey" class="form-control" required />
     </div>
 
     <div class="col-md-6">
-      <label class="form-label">App IDs (comma separated)</label>
-      <input type="text" id="appIds" class="form-control" required>
+      <label class="form-label">App IDs (comma separated)</label><br />
+      <span class="text-muted">
+        <strong>Instagram:</strong> com.instagram.android,389801252<br />
+        <strong>Tinder:</strong> 547702041,com.tinder.tinderlite,com.tinder
+      </span>
+      <input type="text" id="appIds" class="form-control" required />
     </div>
 
     <div class="col-md-3">
@@ -45,12 +69,24 @@
 
     <div class="col-md-3">
       <label class="form-label">Start Date (MM-YYYY)</label>
-      <input type="text" id="startDate" class="form-control" placeholder="MM-YYYY" required>
+      <input
+        type="text"
+        id="startDate"
+        class="form-control"
+        placeholder="MM-YYYY"
+        required
+      />
     </div>
 
     <div class="col-md-3">
       <label class="form-label">End Date (MM-YYYY)</label>
-      <input type="text" id="endDate" class="form-control" placeholder="MM-YYYY" required>
+      <input
+        type="text"
+        id="endDate"
+        class="form-control"
+        placeholder="MM-YYYY"
+        required
+      />
     </div>
 
     <div class="col-md-3">
@@ -64,19 +100,22 @@
     <div class="col-md-12">
       <label class="form-label">Select Countries</label>
       <div class="country-checkboxes">
-        <label><input type="checkbox" class="countryBox" value="world"> Worldwide</label>
-        <label><input type="checkbox" class="countryBox" value="au"> Australia</label>
-        <label><input type="checkbox" class="countryBox" value="br"> Brazil</label>
-        <label><input type="checkbox" class="countryBox" value="ca"> Canada</label>
-        <label><input type="checkbox" class="countryBox" value="fr"> France</label>
-        <label><input type="checkbox" class="countryBox" value="de"> Germany</label>
-        <label><input type="checkbox" class="countryBox" value="in"> India</label>
-        <label><input type="checkbox" class="countryBox" value="it"> Italy</label>
-        <label><input type="checkbox" class="countryBox" value="jp"> Japan</label>
-        <label><input type="checkbox" class="countryBox" value="pl"> Poland</label>
-        <label><input type="checkbox" class="countryBox" value="es"> Spain</label>
-        <label><input type="checkbox" class="countryBox" value="gb"> United Kingdom</label>
-        <label><input type="checkbox" class="countryBox" value="us" checked> United States</label>
+        <label><input type="checkbox" class="countryBox" value="world" /> Worldwide</label>
+        <label><input type="checkbox" class="countryBox" value="au" /> Australia</label>
+        <label><input type="checkbox" class="countryBox" value="br" /> Brazil</label>
+        <label><input type="checkbox" class="countryBox" value="ca" /> Canada</label>
+        <label><input type="checkbox" class="countryBox" value="fr" /> France</label>
+        <label><input type="checkbox" class="countryBox" value="de" /> Germany</label>
+        <label><input type="checkbox" class="countryBox" value="in" /> India</label>
+        <label><input type="checkbox" class="countryBox" value="it" /> Italy</label>
+        <label><input type="checkbox" class="countryBox" value="jp" /> Japan</label>
+        <label><input type="checkbox" class="countryBox" value="pl" /> Poland</label>
+        <label><input type="checkbox" class="countryBox" value="es" /> Spain</label>
+        <label><input type="checkbox" class="countryBox" value="gb" /> United Kingdom</label>
+        <label
+          ><input type="checkbox" class="countryBox" value="us" checked />
+          United States</label
+        >
       </div>
     </div>
 
@@ -92,11 +131,11 @@
     <p id="progressText">Loading data, please wait...</p>
   </div>
 
-  <div id="downloadsChart" style="width:100%; height:400px; margin-top: 30px;"></div>
-  <div id="activeUsersChart" style="width:100%; height:400px; margin-top: 30px;"></div>
+  <div id="downloadsChart" style="width: 100%; height: 400px; margin-top: 30px;"></div>
+  <div id="activeUsersChart" style="width: 100%; height: 400px; margin-top: 30px;"></div>
 
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener("DOMContentLoaded", function () {
       prefillDates();
     });
 
@@ -107,18 +146,18 @@
       // same month last year
       const start = new Date(end.getFullYear() - 1, end.getMonth(), 1);
 
-      const endVal = `${String(end.getMonth() + 1).padStart(2, '0')}-${end.getFullYear()}`;
-      const startVal = `${String(start.getMonth() + 1).padStart(2, '0')}-${start.getFullYear()}`;
+      const endVal = `${String(end.getMonth() + 1).padStart(2, "0")}-${end.getFullYear()}`;
+      const startVal = `${String(start.getMonth() + 1).padStart(2, "0")}-${start.getFullYear()}`;
 
       const endDateEl = document.getElementById("endDate");
       const startDateEl = document.getElementById("startDate");
 
-      if(endDateEl) endDateEl.value = endVal;
-      if(startDateEl) startDateEl.value = startVal;
+      if (endDateEl) endDateEl.value = endVal;
+      if (startDateEl) startDateEl.value = startVal;
     }
 
     const formEl = document.getElementById("appForm");
-    formEl.addEventListener("submit", async function(e) {
+    formEl.addEventListener("submit", async function (e) {
       e.preventDefault();
 
       const spinner = document.getElementById("loadingSpinner");
@@ -128,7 +167,12 @@
 
       // Gather inputs
       const apiKey = document.getElementById("apiKey").value.trim();
-      const appIds = document.getElementById("appIds").value.trim().split(",").map(id => id.trim()).filter(Boolean);
+      const appIds = document
+        .getElementById("appIds")
+        .value.trim()
+        .split(",")
+        .map((id) => id.trim())
+        .filter(Boolean);
       const granularity = document.getElementById("granularity").value;
       const stackLines = document.getElementById("stackLines").value === "yes";
 
@@ -140,7 +184,9 @@
       const endDate = `${endDateInput.slice(3, 7)}-${endDateInput.slice(0, 2)}`;
 
       // Countries to fetch
-      const selectedCountries = Array.from(document.querySelectorAll('.countryBox:checked')).map(cb => cb.value);
+      const selectedCountries = Array.from(document.querySelectorAll(".countryBox:checked")).map(
+        (cb) => cb.value
+      );
 
       // Data storage
       const downloadsData = {};
@@ -150,6 +196,7 @@
       let totalCalls = appIds.length * selectedCountries.length * 2;
       let completedCalls = 0;
 
+      // We'll store the date strings exactly as returned by the API
       for (const appId of appIds) {
         const platform = isNaN(appId) ? "google" : "apple";
         for (const country of selectedCountries) {
@@ -161,10 +208,12 @@
             const dlRes = await fetch(`${baseUrl}/downloads${queryParams}`);
             const dlJson = await dlRes.json();
             if (dlJson.downloads) {
-              dlJson.downloads.forEach(d => {
-                const date = d.date.slice(0, 7); // YYYY-MM-DD -> YYYY-MM
+              dlJson.downloads.forEach((d) => {
+                // Keep the FULL date string from API, e.g. '2024-03-15'
+                const date = d.date; // do not slice(0,7) 
                 downloadsData[date] = downloadsData[date] || {};
-                downloadsData[date][country] = (downloadsData[date][country] || 0) + d.downloads;
+                downloadsData[date][country] =
+                  (downloadsData[date][country] || 0) + d.downloads;
               });
             }
           } catch (err) {
@@ -179,8 +228,8 @@
             const auRes = await fetch(`${baseUrl}/active-users${queryParams}`);
             const auJson = await auRes.json();
             if (auJson.active_users) {
-              auJson.active_users.forEach(d => {
-                const date = d.date.slice(0, 7);
+              auJson.active_users.forEach((d) => {
+                const date = d.date; // keep the full date
                 usersData[date] = usersData[date] || {};
                 usersData[date][country] = (usersData[date][country] || 0) + d.active_users;
               });
@@ -201,15 +250,18 @@
     });
 
     function updateProgress(current, total) {
-      document.getElementById("progressText").innerText = `Progress: ${current} / ${total} API calls completed...`;
+      document.getElementById(
+        "progressText"
+      ).innerText = `Progress: ${current} / ${total} API calls completed...`;
     }
 
     function delay(ms) {
-      return new Promise(resolve => setTimeout(resolve, ms));
+      return new Promise((resolve) => setTimeout(resolve, ms));
     }
 
     function renderChart(container, data, title, stackLines) {
-      const categories = Object.keys(data).sort();
+      // The 'keys' are now the FULL date string from the API (daily, weekly, or monthly)
+      const categories = Object.keys(data).sort(); // ISO date sorts are chronological
       const chartContainer = document.getElementById(container);
       chartContainer.innerHTML = "";
 
@@ -218,64 +270,77 @@
         return;
       }
 
-      const countries = Array.from(document.querySelectorAll('.countryBox:checked')).map(cb => cb.value);
+      const countries = Array.from(document.querySelectorAll(".countryBox:checked")).map(
+        (cb) => cb.value
+      );
 
       const colorPalette = {
-        world: '#1f77b4',
-        us: '#ff7f0e',
-        au: '#2ca02c',
-        gb: '#d62728',
-        ca: '#9467bd',
-        in: '#8c564b',
-        de: '#e377c2',
-        fr: '#7f7f7f',
-        jp: '#bcbd22',
-        br: '#17becf',
-        it: '#f7b6d2',
-        pl: '#c49c94',
-        es: '#aec7e8'
+        world: "#1f77b4",
+        us: "#ff7f0e",
+        au: "#2ca02c",
+        gb: "#d62728",
+        ca: "#9467bd",
+        in: "#8c564b",
+        de: "#e377c2",
+        fr: "#7f7f7f",
+        jp: "#bcbd22",
+        br: "#17becf",
+        it: "#f7b6d2",
+        pl: "#c49c94",
+        es: "#aec7e8",
       };
 
-      const chartType = stackLines ? 'area' : 'line';
-      const stackingMode = stackLines ? 'normal' : null;
+      const chartType = stackLines ? "area" : "line";
+      const stackingMode = stackLines ? "normal" : null;
 
-      const series = countries.map(country => ({
+      // Build series for each country
+      const series = countries.map((country) => ({
         name: country,
         color: colorPalette[country] || undefined,
-        data: categories.map(date => data[date]?.[country] || 0),
-        type: chartType
+        data: categories.map((date) => data[date]?.[country] || 0),
+        type: chartType,
       }));
 
       Highcharts.chart(container, {
         chart: {
-          type: chartType
+          type: chartType,
         },
         title: { text: title },
-        xAxis: { categories },
+        xAxis: {
+          categories,
+          // For more date formatting, you can do:
+          // labels: { formatter: function() { return this.value; } }
+        },
         yAxis: {
           title: { text: title },
-          allowDecimals: false
+          allowDecimals: false,
         },
         plotOptions: {
           area: {
             stacking: stackingMode,
             marker: {
               enabled: false,
-              symbol: 'circle',
-              radius: 2
-            }
+              symbol: "circle",
+              radius: 2,
+            },
           },
           line: {
             marker: {
-              enabled: false
-            }
-          }
+              enabled: false,
+            },
+          },
         },
         series,
         exporting: {
           enabled: true,
-          csv: { itemDelimiter: ',', lineDelimiter: '\n' }
-        }
+          csv: {
+            itemDelimiter: ",",
+            lineDelimiter: "\n",
+            columnHeaderFormatter: function (item, key) {
+              return key === "x" ? "Date" : item.name;
+            },
+          },
+        },
       });
     }
   </script>
